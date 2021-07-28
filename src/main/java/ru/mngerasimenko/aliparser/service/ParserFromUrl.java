@@ -18,19 +18,20 @@ import ru.mngerasimenko.aliparser.exception.HTTPQueryException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 
 public class ParserFromUrl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ParserFromUrl.class);
 
-    private HashSet<JProduct> productSet;
+    private Set<JProduct> productSet;
 
     public ParserFromUrl() {
         productSet = new HashSet<>();
     }
 
-    public HashSet<JProduct> getProductSet() throws HTTPQueryException, IOException {
+    public Set<JProduct> getProductSet() throws HTTPQueryException, IOException {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         Long timestamp;
@@ -60,8 +61,8 @@ public class ParserFromUrl {
 
                 if (oldSizeSet < productSet.size()) {
                     LOGGER.info("Parse {} products", productSet.size());
+                    oldSizeSet = productSet.size();
                 }
-                oldSizeSet = productSet.size();
                 offset += 25;
                 if (offset > 5000) break;
             } catch (ClientProtocolException e) {
